@@ -39,13 +39,27 @@ namespace Outfit_Picker.Controllers
         // GET: Outfits/Create
         public ActionResult Create()
         {
-            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "Name");
-            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "Name");
-            ViewBag.TopID = new SelectList(db.Tops, "TopID", "Name");
+            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "BottomName");
+            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "ShoeName");
+            ViewBag.TopID = new SelectList(db.Tops, "TopID", "TopName");
 
 
+            OutfitViewModel outfitViewModel = new OutfitViewModel
+            {
 
-            return View();
+                //Looks up all acessories then 
+                AllAccessories = (from a in db.Accessories
+                                  select new SelectListItem
+                                  {
+                                      Value = a.AccessoryID.ToString(),
+                                      Text = a.AccessoryName
+
+                                  })
+
+
+            };
+
+            return View(outfitViewModel);
         }
 
         // POST: Outfits/Create
@@ -62,11 +76,14 @@ namespace Outfit_Picker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "Name", outfit.BottomID);
-            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "Name", outfit.ShoeID);
-            ViewBag.TopID = new SelectList(db.Tops, "TopID", "Name", outfit.TopID);
+            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "BottomName", outfit.BottomID);
+            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "ShoeName", outfit.ShoeID);
+            ViewBag.TopID = new SelectList(db.Tops, "TopID", "TopName", outfit.TopID);
+           
             return View(outfit);
         }
+
+
 
         // GET: Outfits/Edit/5
         public ActionResult Edit(int? id)
@@ -80,28 +97,29 @@ namespace Outfit_Picker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "Name", outfit.BottomID);
-            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "Name", outfit.ShoeID);
-            ViewBag.TopID = new SelectList(db.Tops, "TopID", "Name", outfit.TopID);
+            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "BottomName", outfit.BottomID);
+            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "ShoeName", outfit.ShoeID);
+            ViewBag.TopID = new SelectList(db.Tops, "TopID", "TopName", outfit.TopID);
 
-            OutfitViewModel outfitViewModel = new OutfitViewModel
-            {
-                Outfit = outfit,
+            //OutfitViewModel outfitViewModel = new OutfitViewModel
+            //{
+            //    Outfit = outfit,
 
-                //Looks up all acessories then 
-                AllAccessories = (from a in db.Accessories
-                                  select new SelectListItem
-                                  {
-                                      Value = a.AccessoryID.ToString(),
-                                      Text = a.AccessoryName
+            //    //Looks up all acessories then 
+            //    AllAccessories = (from a in db.Accessories
+            //                      select new SelectListItem
+            //                      {
+            //                          Value = a.AccessoryID.ToString(),
+            //                          Text = a.AccessoryName
 
-                                  })
-
-
-            };
+            //                      })
 
 
-            return View(outfitViewModel);
+            //};
+
+
+            //return View(outfitViewModel);
+            return View();
         }
 
         // POST: Outfits/Edit/5
@@ -109,17 +127,37 @@ namespace Outfit_Picker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OutfitID,OutfitName,TopID,BottomID,ShoeID")] Outfit outfit)
+        public ActionResult Edit([Bind(Include = "OutfitID,OutfitName,TopID,BottomID,ShoeID")] Outfit outfit, List<int> SelectedAccessories)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(outfit).State = EntityState.Modified;
+                //Changing the entity will not longer work
+                //db.Entry(outfit).State = EntityState.Modified;
+
+                //Place the data for the assigned outfit into a variable "existing..."
+                var existingOutfit = db.Outfits.Find(outfit.OutfitID);
+
+                //assigning the data bound form user to the variable we created above
+                existingOutfit.TopID = outfit.TopID;
+                existingOutfit.BottomID = outfit.BottomID;
+                existingOutfit.ShoeID = outfit.ShoeID;
+
+                //Wipe out all previous accessory choices so no need for logic to determine which
+                //accessories the user previously chose vs. currently chose
+                existingOutfit.Accessories.Clear();
+
+                foreach(int accessoryID in SelectedAccessories)
+                {
+                    //find the accessory by its ID and add it to the existing outfit
+                    existingOutfit.Accessories.Add(db.Accessories.Find(accessoryID));
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "Name", outfit.BottomID);
-            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "Name", outfit.ShoeID);
-            ViewBag.TopID = new SelectList(db.Tops, "TopID", "Name", outfit.TopID);
+            ViewBag.BottomID = new SelectList(db.Bottoms, "BottomID", "BottomName", outfit.BottomID);
+            ViewBag.ShoeID = new SelectList(db.Shoes, "ShoeID", "ShoeName", outfit.ShoeID);
+            ViewBag.TopID = new SelectList(db.Tops, "TopID", "TopName", outfit.TopID);
             return View(outfit);
         }
 

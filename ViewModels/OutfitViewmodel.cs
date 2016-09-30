@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Outfit_Picker.ViewModels
 {
-    public class OutfitViewmodel
+    public class OutfitViewModel
     {
         public Outfit Outfit { get; set; }
-        public IEnumerable<SelectListItems> AllAccessories { get; set; }
-
+        public IEnumerable<SelectListItem> AllAccessories { get; set; }
 
         private List<int> _selectedAccessories;
         public List<int> SelectedAccessories
@@ -19,12 +19,16 @@ namespace Outfit_Picker.ViewModels
             {
                 if (_selectedAccessories == null)
                 {
+                    // Look up the current outfit's accessories,
+                    // and convert them into integer IDs
                     _selectedAccessories = (from a in Outfit.Accessories
-                                            select a.AccessoryId).ToList();
+                                            select a.AccessoryID).ToList();
                 }
                 return _selectedAccessories;
             }
             set { _selectedAccessories = value; }
         }
+
+
     }
 }

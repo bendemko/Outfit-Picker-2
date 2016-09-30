@@ -9,7 +9,7 @@ namespace Outfit_Picker.Models
     {
         public Outfit()
         {
-            Accessories = new HashSet<Accessory>();
+            this.Accessories = new HashSet<Accessory>();
         }
 
         public int OutfitID { get; set; }

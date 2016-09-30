@@ -176,6 +176,26 @@
     <Compile Include="Migrations\201609272354431_fix-outfits.Designer.cs">
       <DependentUpon>201609272354431_fix-outfits.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609292205325_add-migration first.cs" />
+    <Compile Include="Migrations\201609292205325_add-migration first.Designer.cs">
+      <DependentUpon>201609292205325_add-migration first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609292220480_add-migration second.cs" />
+    <Compile Include="Migrations\201609292220480_add-migration second.Designer.cs">
+      <DependentUpon>201609292220480_add-migration second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609292301346_third.cs" />
+    <Compile Include="Migrations\201609292301346_third.Designer.cs">
+      <DependentUpon>201609292301346_third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609292318559_third1.cs" />
+    <Compile Include="Migrations\201609292318559_third1.Designer.cs">
+      <DependentUpon>201609292318559_third1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609292319499_fourth.cs" />
+    <Compile Include="Migrations\201609292319499_fourth.Designer.cs">
+      <DependentUpon>201609292319499_fourth.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accessory.cs" />
     <Compile Include="Models\Bottom.cs" />
@@ -187,7 +207,7 @@
     <Compile Include="Models\Shoe.cs" />
     <Compile Include="Models\Top.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\OutfitViewmodel.cs" />
+    <Compile Include="ViewModels\OutfitViewModel.cs" />
     <Compile Include="ViewModels\SelectListItems.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +336,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609272354431_fix-outfits.resx">
       <DependentUpon>201609272354431_fix-outfits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609292205325_add-migration first.resx">
+      <DependentUpon>201609292205325_add-migration first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609292220480_add-migration second.resx">
+      <DependentUpon>201609292220480_add-migration second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609292301346_third.resx">
+      <DependentUpon>201609292301346_third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609292318559_third1.resx">
+      <DependentUpon>201609292318559_third1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609292319499_fourth.resx">
+      <DependentUpon>201609292319499_fourth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
